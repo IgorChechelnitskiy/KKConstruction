@@ -29,14 +29,6 @@ p { line-height: 1.65; }
   white-space: nowrap;
 }
 .skip-link:focus { position: absolute; z-index: 5; padding: 12px; background: #151916; }
-.footer-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 14px 24px;
-  padding-block: 16px;
-}
 .brand-mark {
   display: inline-flex;
   flex: none;
@@ -123,8 +115,6 @@ p { line-height: 1.65; }
 }
 .site-header a:hover { color: #fff; }
 .header-quote:hover { background: #f5f3ed1a; border-color: #f5f3ed; }
-footer a { color: var(--muted); }
-footer a:hover { color: var(--accent); }
 .header-destination { padding-top: clamp(48px, 6vw, 88px); }
 .header-destination h2 { font-size: clamp(2.2rem, 5vw, 4.25rem); }
 .header-destination .section-intro { max-width: 60ch; }
@@ -239,8 +229,91 @@ h2 { font-size: clamp(2.8rem, 7vw, 5.5rem); }
 .form-note { color: var(--muted); }
 .form-error { color: #ffbbae; }
 .form-card .button { margin-top: 18px; }
-footer { border-top: 1px solid var(--line); }
-.footer-inner { padding-block: 24px; }
+.site-footer {
+  border-top: 1px solid #363a3d;
+  background: #101214;
+}
+.footer-inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 18px clamp(18px, 3vw, 56px);
+  width: min(1540px, calc(100% - 2 * clamp(16px, 4vw, 64px)));
+  margin-inline: auto;
+  padding-block: 18px;
+}
+.footer-brand { display: flex; align-items: center; gap: 18px; }
+.footer-brand .brand-mark { width: 49px; }
+.footer-brand strong {
+  display: block;
+  font-size: .9rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+}
+.footer-brand small { display: block; margin-top: 4px; color: var(--muted); font-size: .8125rem; }
+.site-footer nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: clamp(16px, 2.5vw, 42px);
+}
+.site-footer nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--muted);
+  font-size: .875rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.site-footer nav a:hover { color: #fff; }
+.footer-socials { display: flex; gap: clamp(12px, 1.7vw, 28px); }
+.footer-social {
+  --social-background: transparent;
+  --social-foreground: #fff;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #5e6264;
+  border-radius: 50%;
+  color: var(--muted);
+  transition: color 220ms ease, border-color 220ms ease;
+}
+.footer-social::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--social-background);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+.footer-social[data-platform="instagram"] {
+  --social-background: linear-gradient(145deg, #5851db, #c13584 50%, #fd1d1d 76%, #fcb045);
+}
+.footer-social[data-platform="facebook"] { --social-background: #0866ff; }
+.footer-social[data-platform="whatsapp"] {
+  --social-background: #25d366;
+  --social-foreground: #102c1b;
+}
+.footer-social:is(:hover, :focus-visible) {
+  color: var(--social-foreground);
+  border-color: transparent;
+}
+.footer-social:is(:hover, :focus-visible)::before { opacity: 1; }
+.footer-socials svg { width: 22px; height: 22px; }
+@media (prefers-reduced-motion: reduce) {
+  .footer-social, .footer-social::before { transition: none; }
+}
+
+@media (max-width: 1050px) {
+  .footer-inner { grid-template-columns: 1fr auto; }
+  .site-footer nav { grid-row: 2; grid-column: 1 / -1; justify-content: start; }
+}
 
 @media (max-width: 1024px) {
   .site-header { position: relative; background: #0b0e11; }
@@ -288,6 +361,6 @@ footer { border-top: 1px solid var(--line); }
   .gallery-section .swiper { margin-top: 22px; padding-bottom: 38px; }
   .swiper img { height: auto; aspect-ratio: 4 / 3; }
   .swiper figcaption { padding: 32px 14px 12px; }
-  .footer-inner { padding-block: 12px; }
-  .footer-inner a { display: inline-flex; align-items: center; min-height: 44px; }
+  .footer-inner { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .site-footer nav { column-gap: 16px; }
 }

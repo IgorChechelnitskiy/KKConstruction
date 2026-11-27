@@ -1,6 +1,7 @@
 import { BrandIntro, useBrandIntro } from '../animation/BrandIntro';
 import { HeroTitle } from '../animation/HeroTitle';
 import { SiteHeader } from '../components/SiteHeader';
+import { SiteFooter } from '../components/SiteFooter';
 import { ProjectForm } from '../components/ProjectForm';
 import { ProjectGallery } from '../components/ProjectGallery';
 import { projectImage, projectImageSrcSet, sectionIds, services } from '../content/landingPage';
@@ -55,7 +56,7 @@ export function LandingPage() {
             <ProjectForm />
           </section>
         </main>
-        <footer><div className="wrap footer-inner"><span>KK Construction</span><a href={`#${sectionIds.top}`}>Back to top</a></div></footer>
+        <SiteFooter />
       </div>
     </>
   );
