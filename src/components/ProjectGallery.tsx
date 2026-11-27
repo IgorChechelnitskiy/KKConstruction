@@ -5,6 +5,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { gallery, projectImage, sectionIds } from '../content/landingPage';
+import { galleryOrigins } from '../content/galleryTypes';
 
 function isBackdropClick(event: MouseEvent<HTMLDialogElement>) {
   if (event.target !== event.currentTarget) return false;
@@ -24,7 +25,7 @@ export function ProjectGallery() {
     setActivePhoto(index => (index + direction + gallery.length) % gallery.length);
   }
 
-  function renderPhoto({ file, alt }: (typeof gallery)[number], index: number) {
+  function renderPhoto({ file, alt, origin }: (typeof gallery)[number], index: number) {
     return (
       <button key={file} type="button" className="project-photo" aria-haspopup="dialog"
         aria-label={`Bild vergrößern: ${alt}`} onClick={() => {
@@ -32,6 +33,7 @@ export function ProjectGallery() {
           dialogRef.current?.showModal();
         }}>
         <img src={projectImage(file)} alt="" loading="lazy" />
+        <span className="gallery-photo-origin">{galleryOrigins[origin]}</span>
       </button>
     );
   }
@@ -41,9 +43,9 @@ export function ProjectGallery() {
       <div className="wrap section">
         <span className="eyebrow">Visualisierungen</span>
         <h2 id="visualizations-title">Architektur &amp; Raumkonzepte</h2>
-        <p className="gallery-image-note">KI-generierte Visualisierungen. Die dargestellten Objekte sind illustrative Beispiele und keine Referenzprojekte der KK Construction GbR.</p>
+        {gallery.length === 0 && <p className="gallery-image-note">Derzeit sind keine Visualisierungen verfügbar.</p>}
         <div id="visualizations-images">
-          {!expanded ? (
+          {gallery.length > 0 && (!expanded ? (
             <Swiper
               modules={[A11y, Keyboard, Navigation, Pagination]}
               a11y={{ containerMessage: 'Architektur & Raumkonzepte', prevSlideMessage: 'Vorheriges Bild', nextSlideMessage: 'Nächstes Bild' }}
@@ -66,9 +68,9 @@ export function ProjectGallery() {
             <div className="project-grid project-grid-expanded">
               {gallery.map(renderPhoto)}
             </div>
-          )}
+          ))}
         </div>
-        <button
+        {gallery.length > 0 && <button
           className="project-gallery-toggle"
           type="button"
           aria-expanded={expanded}
@@ -76,11 +78,11 @@ export function ProjectGallery() {
           onClick={() => setExpanded(previous => !previous)}
         >
           {expanded ? 'Kompakte Ansicht anzeigen' : 'Alle Visualisierungen ansehen'}
-        </button>
+        </button>}
         <p className="visualizations-note" id="visualizations-note">
           Die gezeigten Bilder dienen der Veranschaulichung möglicher Bau- und Gestaltungskonzepte. Sie stellen keine tatsächlich von KK Construction GbR ausgeführten Referenzprojekte dar.
         </p>
-        <dialog ref={dialogRef} className="project-dialog" aria-label="Visualisierungen"
+        {photo && <dialog ref={dialogRef} className="project-dialog" aria-label="Visualisierungen"
           onPointerDown={event => { startedOnBackdrop.current = isBackdropClick(event); }}
           onClick={event => {
             if (startedOnBackdrop.current && isBackdropClick(event)) event.currentTarget.close();
@@ -94,16 +96,16 @@ export function ProjectGallery() {
             }
           }}>
           <div className="project-dialog-header">
-            <span className="gallery-image-note">KI-generierte Visualisierung</span>
+            <span className="gallery-image-note">{galleryOrigins[photo.origin]}</span>
             <button type="button" autoFocus aria-label="Galerie schließen" onClick={() => dialogRef.current?.close()}>×</button>
           </div>
           <img className="project-dialog-image" src={projectImage(photo.file)} alt={photo.alt} loading="lazy" />
-          <div className="project-dialog-controls">
+          {gallery.length > 1 && <div className="project-dialog-controls">
             <button type="button" aria-label="Vorheriges Bild" onClick={() => movePhoto(-1)}>‹</button>
             <span role="status">{activePhoto + 1} / {gallery.length}</span>
             <button type="button" aria-label="Nächstes Bild" onClick={() => movePhoto(1)}>›</button>
-          </div>
-        </dialog>
+          </div>}
+        </dialog>}
       </div>
     </section>
   );

@@ -55,10 +55,11 @@ function InquiryFields({ disabled }: { disabled: boolean }) {
     <fieldset disabled={disabled} onBlur={event => updateError(event.target)} onChange={event => updateError(event.target, true)}>
       <legend className="sr-only">Projektanfrage</legend>
       <div className="form-row">
-        <label>Ihr Name<input name="name" autoComplete="name" pattern="(?:[^\p{L}]*\p{L}){3}.*" maxLength={100} required {...fieldFeedback('name')} />{errorMessage('name')}</label>
-        <label>E-Mail-Adresse<input name="email" type="email" autoComplete="email" maxLength={254} required {...fieldFeedback('email')} />{errorMessage('email')}</label>
+        <div className="form-field">
+          <input name="name" aria-label="Ihr Name" placeholder="Ihr Name" autoComplete="name" pattern="(?:[^\p{L}]*\p{L}){3}.*" maxLength={100} required {...fieldFeedback('name')} />
+          {errorMessage('name')}
+        </div>
         <div className="phone-field">
-          <label htmlFor="inquiry-phone">Telefonnummer (optional)</label>
           <div className="phone-controls">
             <details className="phone-country" onBlur={event => {
               if (!event.currentTarget.contains(event.relatedTarget)) event.currentTarget.open = false;
@@ -96,27 +97,21 @@ function InquiryFields({ disabled }: { disabled: boolean }) {
                 })}
               </ul>
             </details>
-            <input id="inquiry-phone" name="phone" type="tel" autoComplete="tel-national" maxLength={35}
+            <input name="phone" type="tel" aria-label="Telefonnummer (optional)" placeholder="Telefonnummer" autoComplete="tel-national" maxLength={35}
               onInput={event => event.currentTarget.setCustomValidity('')} {...fieldFeedback('phone')} />
           </div>
           {errorMessage('phone')}
         </div>
+        <div className="form-field">
+          <input name="email" type="email" aria-label="E-Mail-Adresse" placeholder="E-Mail-Adresse" autoComplete="email" maxLength={254} required {...fieldFeedback('email')} />
+          {errorMessage('email')}
+        </div>
       </div>
-      <label>Projektart
-        <select name="project_type" required defaultValue="" {...fieldFeedback('project_type')}>
-          <option value="" disabled>Projektart auswählen</option>
-          <option value="New construction">Neubau</option>
-          <option value="Renovation">Renovierung</option>
-          <option value="Interior fit-out">Innenausbau</option>
-          <option value="Other">Sonstiges</option>
-        </select>
-        {errorMessage('project_type')}
-      </label>
-      <label>Beschreiben Sie Ihr Projekt
-        <textarea name="message" rows={4} placeholder="Ort, Umfang und Zeitrahmen" minLength={5} maxLength={3000}
+      <div className="form-field">
+        <textarea name="message" aria-label="Beschreiben Sie Ihr Projekt" rows={4} placeholder="Beschreiben Sie Ihr Projekt" minLength={5} maxLength={3000}
           onInput={event => event.currentTarget.setCustomValidity('')} required {...fieldFeedback('message')} />
         {errorMessage('message')}
-      </label>
+      </div>
     </fieldset>
   );
 }

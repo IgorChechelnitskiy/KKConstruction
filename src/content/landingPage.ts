@@ -1,3 +1,6 @@
+import galleryData from './gallery.json';
+import type { GalleryPhoto } from './galleryTypes';
+
 export const sectionIds = {
   main: 'main',
   top: 'top',
@@ -16,12 +19,7 @@ export const services = [
   { title: 'Holz- und Bautenschutz', description: 'Schutz und Pflege für langfristige Qualität', icon: 'protection' },
 ];
 
-export const gallery = [
-  { file: 'project-villa.webp', alt: 'Moderne Villa mit beleuchteter Glasfassade' },
-  { file: 'project-pool.webp', alt: 'Betonvilla mit Terrasse und Pool' },
-  { file: 'project-kitchen.webp', alt: 'Küche mit dunkler Holzverkleidung und Steininsel' },
-  { file: 'project-aerial.webp', alt: 'Zeitgenössisches Wohnhaus mit Terrasse aus erhöhter Perspektive' },
-];
+export const gallery = galleryData as GalleryPhoto[];
 
 export const projectImage = (file: string) => `${import.meta.env.BASE_URL}images/${file}`;
 

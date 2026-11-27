@@ -1,4 +1,5 @@
 import { defineConfig, loadEnv } from 'vite';
+import { galleryAdmin } from './gallery-admin';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', 'VITE_');
@@ -15,7 +16,7 @@ export default defineConfig(({ mode }) => {
         output: { manualChunks: { swiper: ['swiper/react', 'swiper/modules'] } },
       },
     },
-    plugins: [{
+    plugins: [galleryAdmin(), {
       name: 'native-inquiry-form',
       transformIndexHtml(html) {
         if (!html.includes('<!-- project-inquiry-fallback -->')) return html;
@@ -24,19 +25,10 @@ export default defineConfig(({ mode }) => {
               <div hidden><label>Website<input name="_gotcha" tabindex="-1" autocomplete="off" /></label></div>
               <fieldset>
                 <legend class="sr-only">Projektanfrage</legend>
-                <div class="form-row">
-                  <label>Ihr Name<input name="name" autocomplete="name" pattern="(?:[^\\p{L}]*\\p{L}){3}.*" maxlength="100" required /></label>
-                  <label>E-Mail-Adresse<input name="email" type="email" autocomplete="email" required /></label>
-                  <label>Telefonnummer<input name="phone" type="tel" autocomplete="tel" /></label>
-                </div>
-                <label>Projektart
-                  <select name="project_type" required>
-                    <option value="" selected disabled>Projektart auswählen</option>
-                    <option value="New construction">Neubau</option><option value="Renovation">Renovierung</option>
-                    <option value="Interior fit-out">Innenausbau</option><option value="Other">Sonstiges</option>
-                  </select>
-                </label>
-                <label>Beschreiben Sie Ihr Projekt<textarea name="message" rows="4" minlength="5" maxlength="3000" required></textarea></label>
+                <input name="name" aria-label="Ihr Name" placeholder="Ihr Name" autocomplete="name" pattern="(?:[^\\p{L}]*\\p{L}){3}.*" maxlength="100" required />
+                <input name="phone" type="tel" aria-label="Telefonnummer (optional)" placeholder="Telefonnummer" autocomplete="tel" />
+                <input name="email" type="email" aria-label="E-Mail-Adresse" placeholder="E-Mail-Adresse" autocomplete="email" maxlength="254" required />
+                <textarea name="message" aria-label="Beschreiben Sie Ihr Projekt" placeholder="Beschreiben Sie Ihr Projekt" rows="4" minlength="5" maxlength="3000" required></textarea>
               </fieldset>
               <button class="button">Angebot anfordern</button>
             </form>`
