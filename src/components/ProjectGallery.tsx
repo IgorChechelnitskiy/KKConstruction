@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { gallery, projectImage, sectionIds } from '../content/landingPage';
+import { gallery, projectImage, projectImageSrcSet, sectionIds } from '../content/landingPage';
 
 export function ProjectGallery() {
   return (
@@ -19,10 +19,12 @@ export function ProjectGallery() {
           pagination={{ clickable: true }}
           rewind
         >
-          {gallery.map(({ file, title, alt }) => (
+          {gallery.map(({ file, title, alt, width }) => (
             <SwiperSlide key={file}>
               <figure>
-                <img src={projectImage(file)} alt={alt} loading="lazy" />
+                <img src={projectImage(file)} srcSet={projectImageSrcSet(file, width)}
+                  sizes="(max-width: 400px) calc(100vw - 32px), (max-width: 800px) 92vw, (max-width: 1184px) calc(100vw - 64px), 1120px"
+                  alt={alt} loading="lazy" />
                 <figcaption>{title}</figcaption>
               </figure>
             </SwiperSlide>

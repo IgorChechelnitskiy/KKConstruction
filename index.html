@@ -23,7 +23,10 @@
       </header>
       <main>
         <section class="hero" id="top">
-          <img class="hero-image" src="/images/exterior.jpg" alt="" />
+          <picture class="hero-picture">
+            <source media="(max-width: 600px)" srcset="/images/hero-mobile.jpg" />
+            <img class="hero-image" src="/images/exterior.jpg" srcset="/images/exterior-800.jpg 800w, /images/exterior.jpg 1800w" sizes="100vw" alt="" />
+          </picture>
           <div class="wrap hero-content">
             <h1 class="hero-title" lang="de">BAUEN MIT<br />PRÄZISION</h1>
             <p>Construction and renovation shaped around the way you want to live.</p>

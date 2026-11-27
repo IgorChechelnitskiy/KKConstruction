@@ -3,7 +3,7 @@ import { HeroTitle } from '../animation/HeroTitle';
 import { BrandMark } from '../components/BrandMark';
 import { ProjectForm } from '../components/ProjectForm';
 import { ProjectGallery } from '../components/ProjectGallery';
-import { projectImage, sectionIds, services } from '../content/landingPage';
+import { projectImage, projectImageSrcSet, sectionIds, services } from '../content/landingPage';
 
 export function LandingPage() {
   const intro = useBrandIntro();
@@ -24,7 +24,12 @@ export function LandingPage() {
         </header>
         <main id={sectionIds.main}>
           <section className="hero" id={sectionIds.top} aria-labelledby="hero-title">
-            <img className="hero-image" src={projectImage('exterior.jpg')} alt="" fetchPriority="high" />
+            <picture className="hero-picture">
+              <source media="(max-width: 600px)" srcSet={projectImage('hero-mobile.jpg')} />
+              <img className="hero-image" src={projectImage('exterior.jpg')}
+                srcSet={projectImageSrcSet('exterior.jpg', 1800)}
+                sizes="100vw" alt="" fetchPriority="high" />
+            </picture>
             <div className="wrap hero-content">
               <HeroTitle animate={intro.phase === 'title'} />
               <p>Construction and renovation shaped around the way you want to live.</p>

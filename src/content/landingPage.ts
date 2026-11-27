@@ -13,9 +13,13 @@ export const services = [
 ];
 
 export const gallery = [
-  { file: 'exterior.jpg', title: 'Contemporary exteriors', alt: 'A contemporary home with large windows and contrasting exterior materials' },
-  { file: 'interior.jpg', title: 'Open interiors', alt: 'A bright residential interior with natural finishes' },
-  { file: 'details.jpg', title: 'Materials and finishes', alt: 'A residential interior with carefully coordinated finishes' },
+  { file: 'exterior.jpg', width: 1800, title: 'Contemporary exteriors', alt: 'A contemporary home with large windows and contrasting exterior materials' },
+  { file: 'interior.jpg', width: 1400, title: 'Open interiors', alt: 'A bright residential interior with natural finishes' },
+  { file: 'details.jpg', width: 1400, title: 'Materials and finishes', alt: 'A residential interior with carefully coordinated finishes' },
 ];
 
 export const projectImage = (file: string) => `${import.meta.env.BASE_URL}images/${file}`;
+
+export function projectImageSrcSet(file: string, fullWidth: number) {
+  return `${projectImage(file.replace('.jpg', '-800.jpg'))} 800w, ${projectImage(file)} ${fullWidth}w`;
+}
