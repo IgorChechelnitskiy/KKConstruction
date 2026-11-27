@@ -42,6 +42,7 @@ export function SiteFooter() {
           <div>
             <strong>KK CONSTRUCTION GbR.</strong>
             <small>© {new Date().getFullYear()} Alle Rechte vorbehalten.</small>
+            <a className="privacy-link" href={`${import.meta.env.BASE_URL}datenschutzerklaerung.pdf`}>Datenschutzerklärung (PDF)</a>
           </div>
         </div>
         <nav aria-label="Fußnavigation">

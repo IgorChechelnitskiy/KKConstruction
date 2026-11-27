@@ -72,6 +72,7 @@ export function LandingPage() {
               <span className="eyebrow">Kontakt</span>
               <h2 id="contact-title">Lassen Sie uns Ihr Projekt verwirklichen</h2>
               <p className="section-intro">Erzählen Sie uns von Ihrem Vorhaben. Wir melden uns mit einem unverbindlichen Angebot.</p>
+              <a className="privacy-link" href={`${import.meta.env.BASE_URL}datenschutzerklaerung.pdf`}>Datenschutzerklärung (PDF)</a>
             </div>
             <ProjectForm />
             <div className="contact-brand">

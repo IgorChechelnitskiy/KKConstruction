@@ -393,6 +393,8 @@ h2 { font-size: clamp(1.5rem, 2.3vw, 2.85rem); text-transform: uppercase; }
   letter-spacing: .05em;
 }
 .footer-brand small { display: block; margin-top: 4px; color: var(--muted); font-size: .8125rem; }
+.privacy-link { display: inline-block; margin-top: 8px; color: var(--muted); font-size: .8125rem; text-decoration: underline; text-underline-offset: 3px; }
+.privacy-link:hover { color: #fff; }
 .site-footer nav {
   display: flex;
   justify-content: center;
