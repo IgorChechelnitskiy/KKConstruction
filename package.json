@@ -1,14 +1,24 @@
 {
-  "name": "KKConstruction",
+  "name": "kk-construction",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc --noEmit && vite build",
+    "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@formspree/react": "^3.0.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "swiper": "^12.2.0"
+  },
   "devDependencies": {
-    "typescript": "^5.5.3"
+    "@types/react": "^19.3.3",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^5.5.3",
+    "vite": "^6.4.6"
   },
   "private": true
 }

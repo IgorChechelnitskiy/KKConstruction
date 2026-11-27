@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Explore construction and renovation ideas and tell KK Construction about your project." />
+    <title>KK Construction | Bauen mit Präzision</title>
+    <link rel="stylesheet" href="/src/styles/global.css" />
+    <link rel="stylesheet" href="/src/styles/animation.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <header class="site-header">
+        <div class="wrap header-inner">
+          <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span> KK Construction</a>
+          <nav aria-label="Main navigation">
+            <a href="#services">Services</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#contact">Contact</a>
+          </nav>
+        </div>
+      </header>
+      <main>
+        <section class="hero" id="top">
+          <img class="hero-image" src="/images/exterior.jpg" alt="" />
+          <div class="wrap hero-content">
+            <h1 class="hero-title" lang="de">BAUEN MIT<br />PRÄZISION</h1>
+            <p>Construction and renovation shaped around the way you want to live.</p>
+            <a class="button" href="#contact">Discuss your project</a>
+          </div>
+        </section>
+        <section class="wrap section" id="services">
+          <h2>What we build</h2>
+          <div class="services">
+            <article><h3>New construction</h3><p>Plan a new build around your site and priorities.</p></article>
+            <article><h3>Renovations</h3><p>Update your layout, finishes, or living space.</p></article>
+            <article><h3>Interior fit-outs</h3><p>Choose lighting, materials, finishes, and built-in storage.</p></article>
+          </div>
+        </section>
+        <section class="gallery-section" id="gallery">
+          <div class="wrap section">
+            <h2>Design inspiration</h2>
+            <div class="services">
+              <figure><img class="fallback-photo" src="/images/exterior.jpg" alt="Contemporary home with large windows" loading="lazy" /><figcaption>Contemporary exteriors</figcaption></figure>
+              <figure><img class="fallback-photo" src="/images/interior.jpg" alt="Bright residential interior" loading="lazy" /><figcaption>Open interiors</figcaption></figure>
+              <figure><img class="fallback-photo" src="/images/details.jpg" alt="Coordinated residential finishes" loading="lazy" /><figcaption>Materials and finishes</figcaption></figure>
+            </div>
+          </div>
+        </section>
+        <section class="wrap section contact" id="contact">
+          <div><h2>Tell us what you’re planning.</h2><p class="section-intro">Share your project scope, location, and timeline.</p></div>
+          <!-- project-inquiry-fallback -->
+        </section>
+      </main>
+      <footer><div class="wrap footer-inner"><span>KK Construction</span><a href="#top">Back to top</a></div></footer>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
