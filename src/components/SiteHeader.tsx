@@ -6,7 +6,7 @@ const links = [
   ['Home', sectionIds.top],
   ['Über uns', sectionIds.about],
   ['Leistungen', sectionIds.services],
-  ['Projekte', sectionIds.gallery],
+  ['Visualisierungen', sectionIds.visualizations],
   ['Warum wir', sectionIds.approach],
   ['Kontakt', sectionIds.contact],
 ] as const;
@@ -52,6 +52,11 @@ export function SiteHeader() {
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule);
     window.addEventListener('hashchange', schedule);
+    const initialSection = document.getElementById(window.location.hash.slice(1));
+    if (initialSection) {
+      document.documentElement.style.setProperty('--site-header-height', `${header.offsetHeight}px`);
+      initialSection.scrollIntoView({ behavior: 'instant' });
+    }
     update();
 
     return () => {

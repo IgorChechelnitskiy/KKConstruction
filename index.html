@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="KK Construction GbR bietet Bau- und Montageservices. Entdecken Sie Projektideen und fragen Sie ein Angebot an." />
+    <meta name="description" content="KK Construction GbR bietet Bau- und Montageservices. Entdecken Sie Architekturvisualisierungen und fragen Sie ein Angebot an." />
     <title>KK Construction | Bauen mit Präzision</title>
     <link rel="stylesheet" href="/src/styles/global.css" />
     <link rel="stylesheet" href="/src/styles/animation.css" />
@@ -18,7 +18,7 @@
             <a href="#top" aria-current="location">Home</a>
             <a href="#about">Über uns</a>
             <a href="#services">Leistungen</a>
-            <a href="#gallery">Projekte</a>
+            <a href="#visualisierungen">Visualisierungen</a>
             <a href="#approach">Warum wir</a>
             <a href="#contact">Kontakt</a>
           </nav>
@@ -37,18 +37,33 @@
             <p>Hochwertige Bau- und Montageservices für private und gewerbliche Kunden in ganz Deutschland.</p>
             <div class="hero-actions">
               <a class="button" href="#contact">Kostenloses Angebot</a>
-              <a class="hero-gallery-link" href="#gallery">Unsere Arbeiten ansehen</a>
+              <a class="hero-gallery-link" href="#visualisierungen">Visualisierungen ansehen</a>
             </div>
           </div>
         </section>
         <section class="wrap section services-section" id="services">
           <h2 class="eyebrow">Unsere Leistungen</h2>
           <div class="services">
-            <article><h3>Trockenbau</h3><p>Innenausbau mit höchster Präzision</p></article>
-            <article><h3>Bodenbeläge</h3><p>Verlegung aller Bodenarten, sauber und fachgerecht</p></article>
-            <article><h3>Montagearbeiten</h3><p>Professionelle Montage und Installation</p></article>
-            <article><h3>Demontagearbeiten</h3><p>Rückbau und Demontage, sicher und effizient</p></article>
-            <article><h3>Holz- und Bautenschutz</h3><p>Schutz und Pflege für langfristige Qualität</p></article>
+            <article>
+              <img class="service-icon" src="/images/service-drywall.svg" width="80" height="72" alt="" />
+              <h3>Trockenbau</h3><p>Innenausbau mit höchster Präzision</p>
+            </article>
+            <article>
+              <img class="service-icon" src="/images/service-flooring.svg" width="80" height="72" alt="" />
+              <h3>Bodenbeläge</h3><p>Verlegung aller Bodenarten, sauber und fachgerecht</p>
+            </article>
+            <article>
+              <img class="service-icon" src="/images/service-assembly.svg" width="80" height="72" alt="" />
+              <h3>Montagearbeiten</h3><p>Professionelle Montage und Installation</p>
+            </article>
+            <article>
+              <img class="service-icon" src="/images/service-demolition.svg" width="80" height="72" alt="" />
+              <h3>Demontagearbeiten</h3><p>Rückbau und Demontage, sicher und effizient</p>
+            </article>
+            <article>
+              <img class="service-icon" src="/images/service-protection.svg" width="80" height="72" alt="" />
+              <h3>Holz- und Bautenschutz</h3><p>Schutz und Pflege für langfristige Qualität</p>
+            </article>
           </div>
         </section>
         <div class="company-overview">
@@ -61,23 +76,24 @@
           <section class="company-copy" id="approach">
             <h2 class="eyebrow">Warum wir</h2>
             <ul class="approach-list">
-              <li>Präzise Handwerksarbeit</li>
-              <li>Sorgfältige Materialauswahl</li>
-              <li>Verlässliche Projektplanung</li>
-              <li>Transparente Kommunikation</li>
+              <li><svg class="approach-icon" aria-hidden="true"><use href="/images/approach-icons.svg#craft"></use></svg>Präzise Handwerksarbeit</li>
+              <li><svg class="approach-icon" aria-hidden="true"><use href="/images/approach-icons.svg#materials"></use></svg>Sorgfältige Materialauswahl</li>
+              <li><svg class="approach-icon" aria-hidden="true"><use href="/images/approach-icons.svg#planning"></use></svg>Verlässliche Projektplanung</li>
+              <li><svg class="approach-icon" aria-hidden="true"><use href="/images/approach-icons.svg#tag"></use></svg>Transparente Kommunikation</li>
             </ul>
           </section>
         </div>
-        <section class="gallery-section" id="gallery">
+        <section class="gallery-section" id="visualisierungen" aria-labelledby="visualizations-title" aria-describedby="visualizations-note">
           <div class="wrap section">
-            <span class="eyebrow">Unsere Projekte</span>
-            <h2>Ausgewählte Projektideen</h2>
+            <span class="eyebrow">Visualisierungen</span>
+            <h2 id="visualizations-title">Architektur &amp; Raumkonzepte</h2>
             <div class="project-grid">
               <img src="/images/project-villa.jpg" alt="Moderne Villa mit beleuchteter Glasfassade" loading="lazy" />
               <img src="/images/project-pool.jpg" alt="Betonvilla mit Terrasse und Pool" loading="lazy" />
               <img src="/images/project-kitchen.jpg" alt="Küche mit dunkler Holzverkleidung und Steininsel" loading="lazy" />
               <img src="/images/project-aerial.jpg" alt="Zeitgenössisches Wohnhaus mit Terrasse aus erhöhter Perspektive" loading="lazy" />
             </div>
+            <p class="visualizations-note" id="visualizations-note">Die gezeigten Bilder dienen der Veranschaulichung möglicher Bau- und Gestaltungskonzepte. Sie stellen keine tatsächlich von KK Construction GbR ausgeführten Referenzprojekte dar.</p>
           </div>
         </section>
         <section class="wrap section contact" id="contact">
@@ -99,7 +115,7 @@
             <a href="#top">Home</a>
             <a href="#about">Über uns</a>
             <a href="#services">Leistungen</a>
-            <a href="#gallery">Projekte</a>
+            <a href="#visualisierungen">Visualisierungen</a>
             <a href="#contact">Kontakt</a>
           </nav>
         </div>

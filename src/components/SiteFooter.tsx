@@ -6,7 +6,7 @@ const links = [
   ['Home', sectionIds.top],
   ['Über uns', sectionIds.about],
   ['Leistungen', sectionIds.services],
-  ['Projekte', sectionIds.gallery],
+  ['Visualisierungen', sectionIds.visualizations],
   ['Kontakt', sectionIds.contact],
 ] as const;
 

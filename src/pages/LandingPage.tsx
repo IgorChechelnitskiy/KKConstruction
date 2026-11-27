@@ -5,7 +5,7 @@ import { SiteFooter } from '../components/SiteFooter';
 import { BrandMark } from '../components/BrandMark';
 import { ProjectForm } from '../components/ProjectForm';
 import { ProjectGallery } from '../components/ProjectGallery';
-import { projectImage, projectImageSrcSet, sectionIds, services } from '../content/landingPage';
+import { approachPoints, projectImage, projectImageSrcSet, sectionIds, services } from '../content/landingPage';
 
 export function LandingPage() {
   const intro = useBrandIntro();
@@ -29,7 +29,7 @@ export function LandingPage() {
               <p>Hochwertige Bau- und Montageservices für private und gewerbliche Kunden in ganz Deutschland.</p>
               <div className="hero-actions">
                 <a className="button" href={`#${sectionIds.contact}`}>Kostenloses Angebot</a>
-                <a className="hero-gallery-link" href={`#${sectionIds.gallery}`}>Unsere Arbeiten ansehen</a>
+                <a className="hero-gallery-link" href={`#${sectionIds.visualizations}`}>Visualisierungen ansehen</a>
               </div>
             </div>
           </section>
@@ -38,9 +38,7 @@ export function LandingPage() {
             <div className="services">
               {services.map(({ title, description, icon }) => (
                 <article key={title}>
-                  <svg className="service-icon" viewBox="0 0 48 48" aria-hidden="true">
-                    <path d={icon} />
-                  </svg>
+                  <img className="service-icon" src={projectImage(`service-${icon}.svg`)} width="80" height="72" alt="" />
                   <h3>{title}</h3>
                   <p>{description}</p>
                 </article>
@@ -57,10 +55,14 @@ export function LandingPage() {
             <section className="company-copy" id={sectionIds.approach}>
               <h2 className="eyebrow">Warum wir</h2>
               <ul className="approach-list">
-                <li>Präzise Handwerksarbeit</li>
-                <li>Sorgfältige Materialauswahl</li>
-                <li>Verlässliche Projektplanung</li>
-                <li>Transparente Kommunikation</li>
+                {approachPoints.map(({ icon, label }) => (
+                  <li key={icon}>
+                    <svg className="approach-icon" aria-hidden="true">
+                      <use href={`${projectImage('approach-icons.svg')}#${icon}`} />
+                    </svg>
+                    {label}
+                  </li>
+                ))}
               </ul>
             </section>
           </div>

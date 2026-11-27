@@ -10,15 +10,15 @@ export function ProjectGallery() {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <section className="gallery-section" id={sectionIds.gallery} aria-labelledby="gallery-title" lang="de">
+    <section className="gallery-section" id={sectionIds.visualizations} aria-labelledby="visualizations-title" aria-describedby="visualizations-note" lang="de">
       <div className="wrap section">
-        <span className="eyebrow">Unsere Projekte</span>
-        <h2 id="gallery-title">Ausgewählte Projektideen</h2>
-        <div id="project-images">
+        <span className="eyebrow">Visualisierungen</span>
+        <h2 id="visualizations-title">Architektur &amp; Raumkonzepte</h2>
+        <div id="visualizations-images">
           {!expanded ? (
             <Swiper
               modules={[A11y, Keyboard, Navigation, Pagination]}
-              a11y={{ containerMessage: 'Ausgewählte Projektideen', prevSlideMessage: 'Vorheriges Bild', nextSlideMessage: 'Nächstes Bild' }}
+              a11y={{ containerMessage: 'Architektur & Raumkonzepte', prevSlideMessage: 'Vorheriges Bild', nextSlideMessage: 'Nächstes Bild' }}
               slidesPerView={3}
               spaceBetween={8}
               breakpoints={{ 601: { spaceBetween: 16 }, 1025: { slidesPerView: 4, spaceBetween: 16 } }}
@@ -46,11 +46,14 @@ export function ProjectGallery() {
           className="project-gallery-toggle"
           type="button"
           aria-expanded={expanded}
-          aria-controls="project-images"
+          aria-controls="visualizations-images"
           onClick={() => setExpanded(previous => !previous)}
         >
-          {expanded ? 'Kompakte Ansicht anzeigen' : 'Alle Projekte ansehen'}
+          {expanded ? 'Kompakte Ansicht anzeigen' : 'Alle Visualisierungen ansehen'}
         </button>
+        <p className="visualizations-note" id="visualizations-note">
+          Die gezeigten Bilder dienen der Veranschaulichung möglicher Bau- und Gestaltungskonzepte. Sie stellen keine tatsächlich von KK Construction GbR ausgeführten Referenzprojekte dar.
+        </p>
       </div>
     </section>
   );
