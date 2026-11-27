@@ -1,6 +1,6 @@
 import { BrandIntro, useBrandIntro } from '../animation/BrandIntro';
 import { HeroTitle } from '../animation/HeroTitle';
-import { BrandMark } from '../components/BrandMark';
+import { SiteHeader } from '../components/SiteHeader';
 import { ProjectForm } from '../components/ProjectForm';
 import { ProjectGallery } from '../components/ProjectGallery';
 import { projectImage, projectImageSrcSet, sectionIds, services } from '../content/landingPage';
@@ -12,16 +12,7 @@ export function LandingPage() {
       {intro.phase === 'playing' && <BrandIntro onFinish={intro.finish} onSkip={intro.skip} />}
       <div className="landing-page" onFocusCapture={intro.phase === 'playing' ? intro.skip : undefined}>
         <a className="skip-link" href={`#${sectionIds.main}`}>Skip to content</a>
-        <header className="site-header">
-          <div className="wrap header-inner">
-            <a className="brand" href={`#${sectionIds.top}`}><BrandMark /> KK Construction</a>
-            <nav aria-label="Main navigation">
-              <a href={`#${sectionIds.services}`}>Services</a>
-              <a href={`#${sectionIds.gallery}`}>Gallery</a>
-              <a href={`#${sectionIds.contact}`}>Contact</a>
-            </nav>
-          </div>
-        </header>
+        <SiteHeader />
         <main id={sectionIds.main}>
           <section className="hero" id={sectionIds.top} aria-labelledby="hero-title">
             <picture className="hero-picture">
@@ -36,6 +27,10 @@ export function LandingPage() {
               <a className="button" href={`#${sectionIds.contact}`}>Discuss your project</a>
             </div>
           </section>
+          <section className="wrap header-destination" id={sectionIds.about} lang="de">
+            <h2>Über uns</h2>
+            <p className="section-intro">KK Construction GbR widmet sich Neubau, Renovierung und Innenausbau. Im Mittelpunkt steht die Frage, wie Sie Ihre Räume nutzen möchten.</p>
+          </section>
           <section className="wrap section" id={sectionIds.services} aria-labelledby="services-title">
             <h2 id="services-title">What we build</h2>
             <div className="services">
@@ -48,6 +43,10 @@ export function LandingPage() {
             </div>
           </section>
           <ProjectGallery />
+          <section className="wrap header-destination" id={sectionIds.approach} lang="de">
+            <h2>Warum wir</h2>
+            <p className="section-intro">Ein Projekt beginnt mit Ihren Vorstellungen. Nutzung, Materialien und Zeitrahmen geben die Richtung für die Planung vor.</p>
+          </section>
           <section className="wrap section contact" id={sectionIds.contact} aria-labelledby="contact-title">
             <div>
               <h2 id="contact-title">Tell us what<br />you’re planning.</h2>

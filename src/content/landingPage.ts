@@ -1,8 +1,10 @@
 export const sectionIds = {
   main: 'main',
   top: 'top',
+  about: 'about',
   services: 'services',
   gallery: 'gallery',
+  approach: 'approach',
   contact: 'contact',
 } as const;
 
