@@ -140,7 +140,6 @@ function prepareInquiry(form: HTMLFormElement) {
   data.delete('phone_country');
   if (number) data.set('phone', number);
   else data.delete('phone');
-  if (import.meta.env.DEV) console.log('Inquiry payload:', Object.fromEntries(data));
   return data;
 }
 
@@ -211,7 +210,6 @@ function TestForm() {
   function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!validateInquiry(event.currentTarget)) return;
-    prepareInquiry(event.currentTarget);
     setFormVersion(version => version + 1);
     setSent(true);
   }

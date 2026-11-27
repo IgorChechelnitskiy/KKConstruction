@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { A11y, Keyboard, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -8,6 +8,25 @@ import { gallery, projectImage, sectionIds } from '../content/landingPage';
 
 export function ProjectGallery() {
   const [expanded, setExpanded] = useState(false);
+  const [activePhoto, setActivePhoto] = useState(0);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const photo = gallery[activePhoto];
+
+  function movePhoto(direction: number) {
+    setActivePhoto(index => (index + direction + gallery.length) % gallery.length);
+  }
+
+  function renderPhoto({ file, alt }: (typeof gallery)[number], index: number) {
+    return (
+      <button key={file} type="button" className="project-photo" aria-haspopup="dialog"
+        aria-label={`Bild vergrößern: ${alt}`} onClick={() => {
+          setActivePhoto(index);
+          dialogRef.current?.showModal();
+        }}>
+        <img src={projectImage(file)} alt="" loading="lazy" />
+      </button>
+    );
+  }
 
   return (
     <section className="gallery-section" id={sectionIds.visualizations} aria-labelledby="visualizations-title" aria-describedby="visualizations-note" lang="de">
@@ -28,17 +47,15 @@ export function ProjectGallery() {
               watchOverflow
               rewind
             >
-              {gallery.map(({ file, alt }) => (
-                <SwiperSlide key={file}>
-                  <img src={projectImage(file)} alt={alt} loading="lazy" />
+              {gallery.map((entry, index) => (
+                <SwiperSlide key={entry.file}>
+                  {renderPhoto(entry, index)}
                 </SwiperSlide>
               ))}
             </Swiper>
           ) : (
             <div className="project-grid project-grid-expanded">
-              {gallery.map(({ file, alt }) => (
-                <img key={file} src={projectImage(file)} alt={alt} loading="lazy" />
-              ))}
+              {gallery.map(renderPhoto)}
             </div>
           )}
         </div>
@@ -54,6 +71,24 @@ export function ProjectGallery() {
         <p className="visualizations-note" id="visualizations-note">
           Die gezeigten Bilder dienen der Veranschaulichung möglicher Bau- und Gestaltungskonzepte. Sie stellen keine tatsächlich von KK Construction GbR ausgeführten Referenzprojekte dar.
         </p>
+        <dialog ref={dialogRef} className="project-dialog" aria-label="Visualisierungen"
+          onKeyDown={event => {
+            if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+              event.preventDefault();
+              event.stopPropagation();
+              movePhoto(event.key === 'ArrowLeft' ? -1 : 1);
+            }
+          }}>
+          <div className="project-dialog-header">
+            <button type="button" autoFocus aria-label="Galerie schließen" onClick={() => dialogRef.current?.close()}>×</button>
+          </div>
+          <img className="project-dialog-image" src={projectImage(photo.file)} alt={photo.alt} loading="lazy" />
+          <div className="project-dialog-controls">
+            <button type="button" aria-label="Vorheriges Bild" onClick={() => movePhoto(-1)}>‹</button>
+            <span role="status">{activePhoto + 1} / {gallery.length}</span>
+            <button type="button" aria-label="Nächstes Bild" onClick={() => movePhoto(1)}>›</button>
+          </div>
+        </dialog>
       </div>
     </section>
   );

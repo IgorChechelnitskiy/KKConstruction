@@ -19,7 +19,7 @@ const socialIcons = {
     </svg>
   ),
   facebook: (
-    <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+    <svg viewBox="1 .5 24 24" aria-hidden="true" fill="currentColor">
       <path d="M14 22v-9h3l.5-3H14V8c0-1 .4-2 2-2h2V3.2C17.3 3.1 16.4 3 15.5 3 12.6 3 11 4.8 11 8v2H8v3h3v9z" />
     </svg>
   ),
