@@ -290,8 +290,17 @@ h2 { font-size: clamp(1.5rem, 2.3vw, 2.85rem); text-transform: uppercase; }
 .form-card { min-width: 0; }
 .form-card fieldset { display: grid; gap: 16px; min-width: 0; padding: 0; margin: 0; border: 0; }
 .form-card label { display: grid; gap: 6px; font-weight: 600; }
-.form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.form-row label:last-child { grid-column: 1 / -1; }
+.form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 12px; }
+.phone-field { grid-column: 1 / -1; display: grid; gap: 6px; }
+.phone-controls { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; }
+.phone-country { position: relative; min-width: 0; }
+.phone-country svg { flex: none; width: 18px; }
+.phone-country summary { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px; border: 1px solid var(--line); cursor: pointer; }
+.phone-country summary::-webkit-details-marker { display: none; }
+.phone-country summary::after { content: ''; width: 6px; height: 6px; border: solid currentColor; border-width: 0 1px 1px 0; rotate: 45deg; margin: -3px 3px 0 0; }
+.phone-country-options { position: absolute; z-index: 3; inset-inline-start: 0; top: 100%; width: max-content; min-width: 100%; max-width: 75vw; max-height: 240px; overflow: auto; scrollbar-gutter: stable; list-style: none; margin: 4px 0 0; padding: 4px; background: #17181b; border: 1px solid var(--line); }
+.phone-country-options button { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 40px; padding: 6px 8px; border: 0; background: transparent; color: inherit; text-align: start; }
+.phone-country-options button:is(:hover, :focus-visible, [aria-pressed="true"]) { background: #ffffff17; }
 .form-card :is(input, select, textarea) {
   width: 100%;
   min-width: 0;
@@ -308,7 +317,40 @@ h2 { font-size: clamp(1.5rem, 2.3vw, 2.85rem); text-transform: uppercase; }
 .form-note, .form-error { margin-top: 14px; }
 .form-note { color: var(--muted); }
 .form-error { color: #ffbbae; }
+.form-field-error { color: #ffbbae; font-size: .8125rem; font-weight: 400; }
+.form-card [aria-invalid="true"] { border-color: #ffbbae; }
 .form-card .button { width: 100%; margin-top: 14px; }
+.form-card .form-note + fieldset { margin-top: 12px; }
+.form-toast {
+  position: fixed;
+  z-index: 20;
+  inset-inline-end: max(16px, env(safe-area-inset-right));
+  inset-block-start: max(16px, env(safe-area-inset-top));
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: min(420px, calc(100% - 32px));
+  padding: 8px 8px 8px 12px;
+  border: 1px solid #73767a;
+  border-radius: 8px;
+  background: #17181b;
+  color: #ededed;
+  font-size: .8125rem;
+  box-shadow: 0 8px 24px #0008;
+}
+.form-toast button {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  font-size: 1rem;
+}
+.form-toast button:hover { background: #ffffff12; }
+.form-toast-success { background: #14261d; border-color: #478563; color: #c8f3d9; }
+.form-toast-error { background: #321d21; border-color: #ad626b; color: #ffd4d8; }
 .site-footer {
   border-top: 1px solid #363a3d;
   background: #101214;

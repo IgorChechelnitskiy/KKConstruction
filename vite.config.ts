@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
               <fieldset>
                 <legend class="sr-only">Projektanfrage</legend>
                 <div class="form-row">
-                  <label>Ihr Name<input name="name" autocomplete="name" required /></label>
+                  <label>Ihr Name<input name="name" autocomplete="name" pattern="(?:[^\\p{L}]*\\p{L}){3}.*" maxlength="100" required /></label>
                   <label>E-Mail-Adresse<input name="email" type="email" autocomplete="email" required /></label>
                   <label>Telefonnummer<input name="phone" type="tel" autocomplete="tel" /></label>
                 </div>
@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => {
                     <option value="Interior fit-out">Innenausbau</option><option value="Other">Sonstiges</option>
                   </select>
                 </label>
-                <label>Beschreiben Sie Ihr Projekt<textarea name="message" rows="4" required></textarea></label>
+                <label>Beschreiben Sie Ihr Projekt<textarea name="message" rows="4" minlength="5" maxlength="3000" required></textarea></label>
               </fieldset>
               <button class="button">Angebot anfordern</button>
             </form>`
