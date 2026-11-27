@@ -18,11 +18,12 @@ export function LandingPage() {
         <main id={sectionIds.main}>
           <section className="hero" id={sectionIds.top} aria-labelledby="hero-title">
             <picture className="hero-picture">
-              <source media="(max-width: 600px)" srcSet={projectImage('villa-mobile.jpg')} />
-              <img className="hero-image" src={projectImage('villa-dusk.jpg')}
-                srcSet={projectImageSrcSet('villa-dusk.jpg', 1800)}
+              <source media="(max-width: 600px)" srcSet={projectImage('villa-mobile.webp')} />
+              <img className="hero-image" src={projectImage('villa-dusk.webp')}
+                srcSet={projectImageSrcSet('villa-dusk.webp', 1800)}
                 sizes="100vw" alt="" fetchPriority="high" />
             </picture>
+            <span className="hero-image-note">KI-generiertes Bild</span>
             <div className="wrap hero-content" lang="de">
               <span className="eyebrow">Qualität. Zuverlässigkeit. Präzision.</span>
               <HeroTitle animate={intro.phase === 'title'} />
@@ -46,7 +47,10 @@ export function LandingPage() {
             </div>
           </section>
           <div className="company-overview" lang="de">
-            <img src={projectImage('company-interior.jpg')} alt="Wohnraum mit dunklem Holz und warmem Licht" loading="lazy" />
+            <figure className="company-illustration">
+              <img src={projectImage('company-interior.webp')} alt="Wohnraum mit dunklem Holz und warmem Licht" loading="lazy" />
+              <figcaption>KI-generiertes Bild</figcaption>
+            </figure>
             <section className="company-copy" id={sectionIds.about}>
               <span className="eyebrow">Über uns</span>
               <h2>Qualität, auf die Sie bauen können</h2>
@@ -71,8 +75,22 @@ export function LandingPage() {
             <div lang="de">
               <span className="eyebrow">Kontakt</span>
               <h2 id="contact-title">Lassen Sie uns Ihr Projekt verwirklichen</h2>
-              <p className="section-intro">Erzählen Sie uns von Ihrem Vorhaben. Wir melden uns mit einem unverbindlichen Angebot.</p>
-              <a className="privacy-link" href={`${import.meta.env.BASE_URL}datenschutzerklaerung.pdf`}>Datenschutzerklärung (PDF)</a>
+              <p className="section-intro">Erzählen Sie uns von Ihrem Vorhaben – wir melden uns mit einem unverbindlichen Angebot.</p>
+              <div className="contact-details">
+                <a href="tel:+4915773565328">
+                  <svg aria-hidden="true"><use href={`${projectImage('contact-icons.svg')}#phone`} /></svg>
+                  <span>+49 157 735 653 28</span>
+                </a>
+                <a href="mailto:info@kk-construction.de">
+                  <svg aria-hidden="true"><use href={`${projectImage('contact-icons.svg')}#mail`} /></svg>
+                  <span>info@kk-construction.de</span>
+                </a>
+                <div>
+                  <svg aria-hidden="true"><use href={`${projectImage('contact-icons.svg')}#location`} /></svg>
+                  <span>Deutschland</span>
+                </div>
+              </div>
+              <p className="contact-privacy">Informationen zur Verarbeitung Ihrer Angaben finden Sie in der <a className="privacy-link" href={`${import.meta.env.BASE_URL}datenschutz/`}>Datenschutzerklärung</a>.</p>
             </div>
             <ProjectForm />
             <div className="contact-brand">

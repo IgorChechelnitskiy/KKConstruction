@@ -4,10 +4,10 @@ import { BrandMark } from './BrandMark';
 
 const links = [
   ['Home', sectionIds.top],
-  ['Über uns', sectionIds.about],
   ['Leistungen', sectionIds.services],
-  ['Visualisierungen', sectionIds.visualizations],
+  ['Über uns', sectionIds.about],
   ['Warum wir', sectionIds.approach],
+  ['Visualisierungen', sectionIds.visualizations],
   ['Kontakt', sectionIds.contact],
 ] as const;
 

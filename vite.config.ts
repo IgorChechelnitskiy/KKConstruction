@@ -1,14 +1,27 @@
 import { defineConfig, loadEnv } from 'vite';
 
 export default defineConfig(({ mode }) => {
-  const formId = loadEnv(mode, '.', 'VITE_').VITE_FORMSPREE_FORM_ID?.trim() ?? '';
+  const env = loadEnv(mode, '.', 'VITE_');
+  const formId = env.VITE_FORMSPREE_FORM_ID?.trim() ?? '';
+  const siteUrl = env.VITE_SITE_URL?.trim() ? new URL(env.VITE_SITE_URL.trim()) : undefined;
+  if (siteUrl && (siteUrl.protocol !== 'https:' || siteUrl.username || siteUrl.password || siteUrl.search || siteUrl.hash)) {
+    throw new Error('VITE_SITE_URL must be the public HTTPS site URL.');
+  }
 
   return {
+    build: {
+      rollupOptions: {
+        input: { home: 'index.html', impressum: 'impressum/index.html', datenschutz: 'datenschutz/index.html' },
+        output: { manualChunks: { swiper: ['swiper/react', 'swiper/modules'] } },
+      },
+    },
     plugins: [{
       name: 'native-inquiry-form',
       transformIndexHtml(html) {
+        if (!html.includes('<!-- project-inquiry-fallback -->')) return html;
         const form = /^[a-z\d]+$/i.test(formId)
           ? `<form class="form-card" action="https://formspree.io/f/${formId}" method="post">
+              <div hidden><label>Website<input name="_gotcha" tabindex="-1" autocomplete="off" /></label></div>
               <fieldset>
                 <legend class="sr-only">Projektanfrage</legend>
                 <div class="form-row">
@@ -30,6 +43,29 @@ export default defineConfig(({ mode }) => {
           : '<p class="form-card">Online-Anfragen sind derzeit nicht verfügbar.</p>';
 
         return html.replace('<!-- project-inquiry-fallback -->', form);
+      },
+    }, {
+      name: 'site-search-metadata',
+      transformIndexHtml(html, context) {
+        if (context.path !== '/index.html' && context.path !== '/') return html;
+        if (!siteUrl) return html;
+        const canonical = siteUrl.href.endsWith('/') ? siteUrl.href : siteUrl.href + '/';
+        return { html, tags: [
+          { tag: 'link', attrs: { rel: 'canonical', href: canonical } },
+          { tag: 'meta', attrs: { property: 'og:url', content: canonical } },
+          { tag: 'meta', attrs: { property: 'og:image', content: new URL('images/villa-dusk.jpg', canonical).href } },
+        ] };
+      },
+      generateBundle() {
+        const canonical = siteUrl && (siteUrl.href.endsWith('/') ? siteUrl.href : siteUrl.href + '/');
+        const robots = 'User-agent: *\nAllow: /\n';
+        this.emitFile({ type: 'asset', fileName: 'robots.txt', source: canonical ? robots + 'Sitemap: ' + canonical + 'sitemap.xml\n' : robots });
+        if (canonical) {
+          // The protocol is part of the sitemap XML namespace identifier.
+          const sitemapNamespace = 'http://www.sitemaps.org/schemas/sitemap/0.9';
+          this.emitFile({ type: 'asset', fileName: 'sitemap.xml',
+            source: `<urlset xmlns="${sitemapNamespace}"><url><loc>${canonical.replaceAll('&', '&amp;')}</loc></url></urlset>\n` });
+        }
       },
     }],
   };

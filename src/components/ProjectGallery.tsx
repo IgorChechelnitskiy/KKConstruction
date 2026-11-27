@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, type MouseEvent } from 'react';
 import { A11y, Keyboard, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -6,10 +6,18 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { gallery, projectImage, sectionIds } from '../content/landingPage';
 
+function isBackdropClick(event: MouseEvent<HTMLDialogElement>) {
+  if (event.target !== event.currentTarget) return false;
+  const bounds = event.currentTarget.getBoundingClientRect();
+  return event.clientX < bounds.left || event.clientX >= bounds.right ||
+    event.clientY < bounds.top || event.clientY >= bounds.bottom;
+}
+
 export function ProjectGallery() {
   const [expanded, setExpanded] = useState(false);
   const [activePhoto, setActivePhoto] = useState(0);
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const startedOnBackdrop = useRef(false);
   const photo = gallery[activePhoto];
 
   function movePhoto(direction: number) {
@@ -33,6 +41,7 @@ export function ProjectGallery() {
       <div className="wrap section">
         <span className="eyebrow">Visualisierungen</span>
         <h2 id="visualizations-title">Architektur &amp; Raumkonzepte</h2>
+        <p className="gallery-image-note">KI-generierte Visualisierungen. Die dargestellten Objekte sind illustrative Beispiele und keine Referenzprojekte der KK Construction GbR.</p>
         <div id="visualizations-images">
           {!expanded ? (
             <Swiper
@@ -72,6 +81,11 @@ export function ProjectGallery() {
           Die gezeigten Bilder dienen der Veranschaulichung möglicher Bau- und Gestaltungskonzepte. Sie stellen keine tatsächlich von KK Construction GbR ausgeführten Referenzprojekte dar.
         </p>
         <dialog ref={dialogRef} className="project-dialog" aria-label="Visualisierungen"
+          onPointerDown={event => { startedOnBackdrop.current = isBackdropClick(event); }}
+          onClick={event => {
+            if (startedOnBackdrop.current && isBackdropClick(event)) event.currentTarget.close();
+            startedOnBackdrop.current = false;
+          }}
           onKeyDown={event => {
             if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
               event.preventDefault();
@@ -80,6 +94,7 @@ export function ProjectGallery() {
             }
           }}>
           <div className="project-dialog-header">
+            <span className="gallery-image-note">KI-generierte Visualisierung</span>
             <button type="button" autoFocus aria-label="Galerie schließen" onClick={() => dialogRef.current?.close()}>×</button>
           </div>
           <img className="project-dialog-image" src={projectImage(photo.file)} alt={photo.alt} loading="lazy" />

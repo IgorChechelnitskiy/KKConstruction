@@ -4,8 +4,8 @@ import { BrandMark } from './BrandMark';
 
 const links = [
   ['Home', sectionIds.top],
-  ['Über uns', sectionIds.about],
   ['Leistungen', sectionIds.services],
+  ['Über uns', sectionIds.about],
   ['Visualisierungen', sectionIds.visualizations],
   ['Kontakt', sectionIds.contact],
 ] as const;
@@ -42,7 +42,10 @@ export function SiteFooter() {
           <div>
             <strong>KK CONSTRUCTION GbR.</strong>
             <small>© {new Date().getFullYear()} Alle Rechte vorbehalten.</small>
-            <a className="privacy-link" href={`${import.meta.env.BASE_URL}datenschutzerklaerung.pdf`}>Datenschutzerklärung (PDF)</a>
+            <div className="footer-legal">
+              <a className="privacy-link" href={`${import.meta.env.BASE_URL}impressum/`}>Impressum</a>
+              <a className="privacy-link" href={`${import.meta.env.BASE_URL}datenschutz/`}>Datenschutzerklärung</a>
+            </div>
           </div>
         </div>
         <nav aria-label="Fußnavigation">
@@ -57,6 +60,7 @@ export function SiteFooter() {
               : <span key={platform} {...props} role="img">{socialIcons[platform]}</span>;
           })}
         </div>
+        <p className="footer-image-note">Bildhinweis: Auf dieser Website werden teilweise KI-generierte und KI-bearbeitete Bilder zu Illustrationszwecken verwendet.</p>
       </div>
     </footer>
   );

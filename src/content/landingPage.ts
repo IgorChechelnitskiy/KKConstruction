@@ -17,10 +17,10 @@ export const services = [
 ];
 
 export const gallery = [
-  { file: 'project-villa.jpg', alt: 'Moderne Villa mit beleuchteter Glasfassade' },
-  { file: 'project-pool.jpg', alt: 'Betonvilla mit Terrasse und Pool' },
-  { file: 'project-kitchen.jpg', alt: 'Küche mit dunkler Holzverkleidung und Steininsel' },
-  { file: 'project-aerial.jpg', alt: 'Zeitgenössisches Wohnhaus mit Terrasse aus erhöhter Perspektive' },
+  { file: 'project-villa.webp', alt: 'Moderne Villa mit beleuchteter Glasfassade' },
+  { file: 'project-pool.webp', alt: 'Betonvilla mit Terrasse und Pool' },
+  { file: 'project-kitchen.webp', alt: 'Küche mit dunkler Holzverkleidung und Steininsel' },
+  { file: 'project-aerial.webp', alt: 'Zeitgenössisches Wohnhaus mit Terrasse aus erhöhter Perspektive' },
 ];
 
 export const projectImage = (file: string) => `${import.meta.env.BASE_URL}images/${file}`;
@@ -33,5 +33,5 @@ export const approachPoints = [
 ];
 
 export function projectImageSrcSet(file: string, fullWidth: number) {
-  return `${projectImage(file.replace('.jpg', '-800.jpg'))} 800w, ${projectImage(file)} ${fullWidth}w`;
+  return `${projectImage(file.replace(/(\.[^.]+)$/, '-800$1'))} 800w, ${projectImage(file)} ${fullWidth}w`;
 }

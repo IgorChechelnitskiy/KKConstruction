@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="KK Construction GbR bietet Bau- und Montageservices. Entdecken Sie Architekturvisualisierungen und fragen Sie ein Angebot an." />
     <title>KK Construction | Bauen mit Präzision</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:title" content="KK Construction | Bauen mit Präzision" />
+    <meta property="og:description" content="Bau- und Montageservices, Architekturvisualisierungen und Angebotsanfragen." />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="stylesheet" href="/src/styles/global.css" />
     <link rel="stylesheet" href="/src/styles/animation.css" />
   </head>
@@ -16,10 +22,10 @@
           <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"><i></i><i></i></span><span>KK CONSTRUCTION GbR.</span></a>
           <nav aria-label="Hauptnavigation">
             <a href="#top" aria-current="location">Home</a>
-            <a href="#about">Über uns</a>
             <a href="#services">Leistungen</a>
-            <a href="#visualisierungen">Visualisierungen</a>
+            <a href="#about">Über uns</a>
             <a href="#approach">Warum wir</a>
+            <a href="#visualisierungen">Visualisierungen</a>
             <a href="#contact">Kontakt</a>
           </nav>
           <a class="header-quote" href="#contact">Angebot anfordern</a>
@@ -28,9 +34,10 @@
       <main>
         <section class="hero" id="top">
           <picture class="hero-picture">
-            <source media="(max-width: 600px)" srcset="/images/villa-mobile.jpg" />
-            <img class="hero-image" src="/images/villa-dusk.jpg" srcset="/images/villa-dusk-800.jpg 800w, /images/villa-dusk.jpg 1800w" sizes="100vw" alt="" />
+            <source media="(max-width: 600px)" srcset="/images/villa-mobile.webp" />
+            <img class="hero-image" src="/images/villa-dusk.webp" srcset="/images/villa-dusk-800.webp 800w, /images/villa-dusk.webp 1800w" sizes="100vw" alt="" />
           </picture>
+          <span class="hero-image-note">KI-generiertes Bild</span>
           <div class="wrap hero-content">
             <span class="eyebrow">Qualität. Zuverlässigkeit. Präzision.</span>
             <h1 class="hero-title">BAUEN MIT<br />PRÄZISION</h1>
@@ -67,7 +74,10 @@
           </div>
         </section>
         <div class="company-overview">
-          <img src="/images/company-interior.jpg" alt="Wohnraum mit dunklem Holz und warmem Licht" loading="lazy" />
+          <figure class="company-illustration">
+            <img src="/images/company-interior.webp" alt="Wohnraum mit dunklem Holz und warmem Licht" loading="lazy" />
+            <figcaption>KI-generiertes Bild</figcaption>
+          </figure>
           <section class="company-copy" id="about">
             <span class="eyebrow">Über uns</span>
             <h2>Qualität, auf die Sie bauen können</h2>
@@ -87,17 +97,28 @@
           <div class="wrap section">
             <span class="eyebrow">Visualisierungen</span>
             <h2 id="visualizations-title">Architektur &amp; Raumkonzepte</h2>
+            <p class="gallery-image-note">KI-generierte Visualisierungen. Die dargestellten Objekte sind illustrative Beispiele und keine Referenzprojekte der KK Construction GbR.</p>
             <div class="project-grid">
-              <img src="/images/project-villa.jpg" alt="Moderne Villa mit beleuchteter Glasfassade" loading="lazy" />
-              <img src="/images/project-pool.jpg" alt="Betonvilla mit Terrasse und Pool" loading="lazy" />
-              <img src="/images/project-kitchen.jpg" alt="Küche mit dunkler Holzverkleidung und Steininsel" loading="lazy" />
-              <img src="/images/project-aerial.jpg" alt="Zeitgenössisches Wohnhaus mit Terrasse aus erhöhter Perspektive" loading="lazy" />
+              <img src="/images/project-villa.webp" alt="Moderne Villa mit beleuchteter Glasfassade" loading="lazy" />
+              <img src="/images/project-pool.webp" alt="Betonvilla mit Terrasse und Pool" loading="lazy" />
+              <img src="/images/project-kitchen.webp" alt="Küche mit dunkler Holzverkleidung und Steininsel" loading="lazy" />
+              <img src="/images/project-aerial.webp" alt="Zeitgenössisches Wohnhaus mit Terrasse aus erhöhter Perspektive" loading="lazy" />
             </div>
             <p class="visualizations-note" id="visualizations-note">Die gezeigten Bilder dienen der Veranschaulichung möglicher Bau- und Gestaltungskonzepte. Sie stellen keine tatsächlich von KK Construction GbR ausgeführten Referenzprojekte dar.</p>
           </div>
         </section>
         <section class="wrap section contact" id="contact">
-          <div><span class="eyebrow">Kontakt</span><h2>Lassen Sie uns Ihr Projekt verwirklichen</h2><p class="section-intro">Erzählen Sie uns von Ihrem Vorhaben. Wir melden uns mit einem unverbindlichen Angebot.</p><a class="privacy-link" href="/datenschutzerklaerung.pdf">Datenschutzerklärung (PDF)</a></div>
+          <div>
+            <span class="eyebrow">Kontakt</span>
+            <h2>Lassen Sie uns Ihr Projekt verwirklichen</h2>
+            <p class="section-intro">Erzählen Sie uns von Ihrem Vorhaben – wir melden uns mit einem unverbindlichen Angebot.</p>
+            <div class="contact-details">
+              <a href="tel:+4915773565328"><svg aria-hidden="true"><use href="/images/contact-icons.svg#phone"></use></svg><span>+49 157 735 653 28</span></a>
+              <a href="mailto:info@kk-construction.de"><svg aria-hidden="true"><use href="/images/contact-icons.svg#mail"></use></svg><span>info@kk-construction.de</span></a>
+              <div><svg aria-hidden="true"><use href="/images/contact-icons.svg#location"></use></svg><span>Deutschland</span></div>
+            </div>
+            <p class="contact-privacy">Informationen zur Verarbeitung Ihrer Angaben finden Sie in der <a class="privacy-link" href="./datenschutz/">Datenschutzerklärung</a>.</p>
+          </div>
           <!-- project-inquiry-fallback -->
           <div class="contact-brand">
             <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
@@ -109,15 +130,19 @@
         <div class="footer-inner">
           <div class="footer-brand">
             <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
-            <div><strong>KK CONSTRUCTION GbR.</strong><small>© KK Construction GbR. Alle Rechte vorbehalten.</small><a class="privacy-link" href="/datenschutzerklaerung.pdf">Datenschutzerklärung (PDF)</a></div>
+            <div>
+              <strong>KK CONSTRUCTION GbR.</strong><small>© KK Construction GbR. Alle Rechte vorbehalten.</small>
+              <div class="footer-legal"><a class="privacy-link" href="./impressum/">Impressum</a><a class="privacy-link" href="./datenschutz/">Datenschutzerklärung</a></div>
+            </div>
           </div>
           <nav aria-label="Fußnavigation">
             <a href="#top">Home</a>
-            <a href="#about">Über uns</a>
             <a href="#services">Leistungen</a>
+            <a href="#about">Über uns</a>
             <a href="#visualisierungen">Visualisierungen</a>
             <a href="#contact">Kontakt</a>
           </nav>
+          <p class="footer-image-note">Bildhinweis: Auf dieser Website werden teilweise KI-generierte und KI-bearbeitete Bilder zu Illustrationszwecken verwendet.</p>
         </div>
       </footer>
     </noscript>

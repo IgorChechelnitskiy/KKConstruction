@@ -177,7 +177,34 @@ h2 { font-size: clamp(1.5rem, 2.3vw, 2.85rem); text-transform: uppercase; }
 .services h3 { margin-top: 12px; font-size: clamp(.85rem, 1.2vw, 1.1rem); font-weight: 500; text-transform: uppercase; overflow-wrap: anywhere; hyphens: auto; }
 .services p { color: var(--muted); margin-top: 8px; }
 .company-overview { display: grid; grid-template-columns: 40% 1.15fr 1fr; align-items: stretch; border-block: 1px solid var(--line); }
-.company-overview > img { display: block; width: 100%; height: 100%; min-height: 260px; object-fit: cover; }
+.company-illustration { position: relative; min-width: 0; }
+.company-illustration img { display: block; width: 100%; height: 100%; min-height: 260px; object-fit: cover; }
+.hero-image-note, .company-illustration figcaption {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 4px 8px;
+  color: #ededed;
+  background: #101113df;
+  border: 1px solid var(--line);
+  font-size: .8125rem;
+}
+.gallery-image-note, .footer-image-note { color: var(--muted); font-size: .875rem; }
+.gallery-image-note { margin-top: 8px; }
+.project-dialog-header .gallery-image-note { margin: 0; }
+.contact-details { display: grid; gap: 8px; margin-top: 16px; }
+.contact-details > * { display: flex; align-items: center; gap: 14px; width: fit-content; max-width: 100%; }
+.contact-details svg { flex: none; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.contact-details span { overflow-wrap: anywhere; }
+.contact-privacy { margin-top: 16px; color: var(--muted); font-size: .8125rem; }
+.contact-privacy .privacy-link { display: inline; margin: 0; font-size: inherit; }
+.contact-details a:is(:hover, :focus-visible) { color: #fff; }
+.contact-details a:is(:hover, :focus-visible) span { text-decoration: underline; text-decoration-thickness: 1px; text-decoration-color: #ededed80; text-underline-offset: 4px; }
+.footer-legal { display: flex; flex-wrap: wrap; gap: 0 12px; }
+.footer-image-note { grid-column: 1 / -1; text-align: center; }
+.legal-page { max-width: 760px; }
+.legal-page h1 { margin-block: 20px; }
+.legal-page p + p { margin-top: 12px; }
 .company-copy { align-content: center; padding: clamp(20px, 3.4vw, 58px); }
 .company-copy + .company-copy { border-inline-start: 1px solid var(--line); }
 .company-copy .eyebrow { margin-bottom: 12px; }
@@ -241,7 +268,7 @@ h2 { font-size: clamp(1.5rem, 2.3vw, 2.85rem); text-transform: uppercase; }
 }
 .project-dialog::backdrop { background: #07080bce; }
 .project-dialog-header, .project-dialog-controls { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.project-dialog-header { justify-content: flex-end; margin-bottom: 8px; }
+.project-dialog-header { margin-bottom: 8px; }
 .gallery-section .project-dialog-image { height: min(65dvh, 640px); aspect-ratio: auto; object-fit: contain; background: #101113; }
 .project-dialog-controls { justify-content: center; margin-top: 12px; color: var(--muted); }
 .project-dialog button { width: 42px; height: 42px; padding: 0; border: 1px solid var(--line); border-radius: 4px; background: transparent; color: inherit; font-size: 1.5rem; }
@@ -456,6 +483,7 @@ h2 { font-size: clamp(1.5rem, 2.3vw, 2.85rem); text-transform: uppercase; }
 }
 
 @media (max-width: 72.5em) {
+  .footer-legal { justify-content: center; }
   .footer-inner { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 10px; text-align: center; }
   .site-footer nav { flex-wrap: wrap; column-gap: 16px; }
 }
@@ -481,7 +509,8 @@ h2 { font-size: clamp(1.5rem, 2.3vw, 2.85rem); text-transform: uppercase; }
 
 @media (max-width: 850px) {
   .company-overview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .company-overview > img { grid-column: 1 / -1; max-height: 330px; }
+  .company-illustration { grid-column: 1 / -1; }
+  .company-illustration img { max-height: 330px; }
 }
 
 @media (max-width: 600px) {
