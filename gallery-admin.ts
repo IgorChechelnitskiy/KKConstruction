@@ -9,7 +9,8 @@ import { galleryOrigins, type GalleryPhoto } from './src/content/galleryTypes';
 const galleryFile = resolve('src/content/gallery.json');
 const uploads = resolve('public/images/gallery');
 const maxImageBytes = 5 * 1024 * 1024;
-const maxRequestBytes = Math.ceil(maxImageBytes / 3) * 4 + 4096;
+const maxPhotosPerUpload = 5;
+const maxRequestBytes = maxPhotosPerUpload * Math.ceil(maxImageBytes / 3) * 4 + 4096;
 const localHost = /^(?:localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/iu;
 const imagePath = /^(?:gallery\/)?[\w-]+\.(?:webp|png|jpe?g)$/i;
 const readGallery = (): GalleryPhoto[] => JSON.parse(readFileSync(galleryFile, 'utf8'));
@@ -73,19 +74,29 @@ function photoDetails(operation: Record<string, unknown>) {
 function applyOperation(operation: Record<string, unknown>) {
   const photos = readGallery();
   if (operation.action === 'add') {
-    const details = photoDetails(operation);
-    if (typeof operation.image !== 'string') throw new RequestError('Bitte wählen Sie ein Bild.');
-    const bytes = Buffer.from(operation.image, 'base64');
-    if (bytes.length > maxImageBytes) throw new RequestError('Das Bild ist zu groß.', 413);
-    const filename = `${randomUUID()}.${imageExtension(bytes)}`;
-    const destination = resolve(uploads, filename);
+    const details = photoDetails({ alt: 'Galeriefoto', origin: 'photo', ...operation });
+    const images = operation.images ?? [operation.image];
+    if (!Array.isArray(images) || images.length < 1 || images.length > maxPhotosPerUpload) {
+      throw new RequestError('Bitte wählen Sie zwischen 1 und 5 Bildern aus.');
+    }
+    const pending = images.map(image => {
+      if (typeof image !== 'string') throw new RequestError('Ungültige Bilddatei.');
+      const bytes = Buffer.from(image, 'base64');
+      if (bytes.length > maxImageBytes) throw new RequestError('Das Bild ist zu groß.', 413);
+      const filename = `${randomUUID()}.${imageExtension(bytes)}`;
+      return { bytes, filename, destination: resolve(uploads, filename) };
+    });
     mkdirSync(uploads, { recursive: true });
-    writeFileSync(destination, bytes, { flag: 'wx' });
-    photos.push({ file: `gallery/${filename}`, ...details });
+    const written: string[] = [];
     try {
+      for (const { bytes, filename, destination } of pending) {
+        writeFileSync(destination, bytes, { flag: 'wx' });
+        written.push(destination);
+      }
+      photos.unshift(...pending.map(({ filename }) => ({ file: `gallery/${filename}`, ...details })));
       writeGallery(photos);
     } catch (error) {
-      unlinkSync(destination);
+      for (const destination of written) unlinkSync(destination);
       throw error;
     }
     return photos;
@@ -141,7 +152,7 @@ export function galleryAdmin(): Plugin {
     handleHotUpdate({ file, modules, server }) {
       if (resolve(file) !== galleryFile) return;
       for (const module of modules) server.moduleGraph.invalidateModule(module);
-      server.ws.send({ type: 'full-reload', path: '/index.html' });
+      server.ws.send({ type: 'custom', event: 'gallery:changed', data: null });
       return [];
     },
     configureServer(server) {

@@ -1,8 +1,13 @@
 [
   {
-    "file": "gallery/100767bf-0fe0-4020-92ba-576b1b76021f.jpg",
-    "alt": "Küche mit dunkler Holzverkleidung und Steininsel",
-    "origin": "generated"
+    "file": "gallery/cde2b6e1-1e5a-41c8-ab46-462f9d8ca822.jpg",
+    "alt": "Galeriefoto",
+    "origin": "photo"
+  },
+  {
+    "file": "gallery/4e65058e-8dee-4d5f-a016-a68c26b9eccf.jpg",
+    "alt": "Galeriefoto",
+    "origin": "photo"
   },
   {
     "file": "project-kitchen.webp",
@@ -23,5 +28,10 @@
     "file": "project-aerial.webp",
     "alt": "Zeitgenössisches Wohnhaus mit Terrasse aus erhöhter Perspektive",
     "origin": "generated"
+  },
+  {
+    "file": "gallery/d3ee19ac-8728-420e-8ece-1879e705d744.jpg",
+    "alt": "Galeriefoto",
+    "origin": "photo"
   }
 ]

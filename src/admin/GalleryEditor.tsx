@@ -1,4 +1,4 @@
-import { useEffect, useState, type SubmitEvent } from 'react';
+import { useEffect, useRef, useState, type SubmitEvent } from 'react';
 import { createRoot } from 'react-dom/client';
 import { galleryOrigins, type GalleryPhoto } from '../content/galleryTypes';
 
@@ -31,6 +31,22 @@ function GalleryEditor() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+  const deleteDialog = useRef<HTMLDialogElement>(null);
+  const [photoToDelete, setPhotoToDelete] = useState<GalleryPhoto>();
+
+  useEffect(() => {
+    if (!message) return;
+    const timer = window.setTimeout(() => setMessage(''), 2000);
+    return () => window.clearTimeout(timer);
+  }, [message]);
+
+  useEffect(() => {
+    const urls = selectedImages.map(image => URL.createObjectURL(image));
+    setPreviewUrls(urls);
+    return () => urls.forEach(url => URL.revokeObjectURL(url));
+  }, [selectedImages]);
 
   useEffect(() => {
     void galleryRequest().then(setPhotos).catch(failure => setError(failure.message));
@@ -55,14 +71,15 @@ function GalleryEditor() {
   async function upload(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
-    const fields = new FormData(form);
-    const image = fields.get('image');
-    if (!(image instanceof File)) return;
-    const saved = await save(async () => {
-      if (image.size > 5 * 1024 * 1024) throw new Error('Das Bild darf höchstens 5 MB groß sein.');
-      return { action: 'add', image: await encodeImage(image), alt: fields.get('alt'), origin: fields.get('origin') };
-    }, 'Bild hinzugefügt.');
-    if (saved) form.reset();
+    if (!selectedImages.length) return;
+    const saved = await save(async () => ({
+      action: 'add',
+      images: await Promise.all(selectedImages.map(encodeImage)),
+    }), 'Bilder hinzugef\u00fcgt.');
+    if (saved) {
+      form.reset();
+      setSelectedImages([]);
+    }
   }
 
   function edit(event: SubmitEvent<HTMLFormElement>, file: string) {
@@ -76,18 +93,46 @@ function GalleryEditor() {
       <a className="privacy-link" href="/#visualisierungen">Öffentliche Galerie ansehen</a>
       <h1>Galerie bearbeiten</h1>
       <p>Die Änderungen werden in diesem Projekt gespeichert.</p>
-      {message && <p role="status">{message}</p>}
+      {message && <div className="form-toast form-toast-success">
+        <p role="status">{message}</p>
+        <button type="button" aria-label="Meldung schließen" onClick={() => setMessage('')}>×</button>
+      </div>}
       {error && <p className="form-error" role="alert">{error}</p>}
-      <form className="form-card" onSubmit={upload}>
+      <form className="form-card gallery-upload" onSubmit={upload}>
         <fieldset disabled={busy || !photos}>
-          <legend>Bild hinzufügen</legend>
-          <label>JPEG, PNG oder WebP (max. 5 MB)<input name="image" type="file" accept="image/jpeg,image/png,image/webp" required /></label>
-          <label>Alternativtext<input name="alt" maxLength={200} required /></label>
-          <label>Bildherkunft<select name="origin" defaultValue="" required>
-            <option value="" disabled>Bitte auswählen</option>
-            <OriginOptions />
-          </select></label>
-          <button className="button">Bild hinzufügen</button>
+          <legend className="gallery-upload-heading">
+            <span>Bilder hinzufügen</span>
+            <span id="gallery-upload-help">Bis zu 5 Bilder (JPEG, PNG oder WebP, je max. 5 MB)</span>
+          </legend>
+          <label className="gallery-upload-file">
+            {selectedImages.length > 0 && <span aria-hidden="true">Bilder auswählen</span>}
+            <input type="file" aria-label="Bilder auswählen" aria-describedby="gallery-upload-help"
+              accept="image/jpeg,image/png,image/webp" multiple onChange={event => {
+              const files = Array.from(event.currentTarget.files ?? []);
+              event.currentTarget.value = '';
+              if (files.length === 0) return;
+              if (selectedImages.length + files.length > 5 || files.some(file => file.size > 5 * 1024 * 1024)) {
+                setError('Bitte w\u00e4hlen Sie bis zu 5 Bilder mit jeweils maximal 5 MB aus.');
+                return;
+              }
+              setError('');
+              setSelectedImages(images => [...images, ...files]);
+            }} />
+          </label>
+          {selectedImages.length > 0 && (
+            <ul className="gallery-upload-previews">
+              {selectedImages.map((image, index) => (
+                <li key={index}>
+                  {previewUrls[index] && <img className="gallery-upload-preview" src={previewUrls[index]} alt={image.name} />}
+                  <button className="gallery-preview-remove" type="button" aria-label={image.name + ' entfernen'}
+                    onClick={() => setSelectedImages(images => images.filter((_, position) => position !== index))}>
+                    ×
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+          <button className="button" disabled={!selectedImages.length}>Bilder hinzufügen</button>
         </fieldset>
       </form>
       <h2>Bilder in der Galerie</h2>
@@ -105,9 +150,8 @@ function GalleryEditor() {
                   <button type="button" disabled={index === 0} onClick={() => void save(() => ({ action: 'move', file, direction: -1 }), 'Reihenfolge gespeichert.')}>Nach oben</button>
                   <button type="button" disabled={index === photos.length - 1} onClick={() => void save(() => ({ action: 'move', file, direction: 1 }), 'Reihenfolge gespeichert.')}>Nach unten</button>
                   <button type="button" onClick={() => {
-                    if (window.confirm('Dieses Bild aus der Galerie entfernen?')) {
-                      void save(() => ({ action: 'remove', file }), 'Bild aus der Galerie entfernt.');
-                    }
+                    setPhotoToDelete({ file, alt, origin });
+                    deleteDialog.current?.showModal();
                   }}>Entfernen</button>
                 </div>
               </fieldset>
@@ -115,6 +159,31 @@ function GalleryEditor() {
           </li>
         ))}
       </ol>
+      <dialog ref={deleteDialog} className="gallery-delete-dialog" aria-labelledby="gallery-delete-title"
+        aria-describedby="gallery-delete-description" onClose={() => setPhotoToDelete(undefined)}
+        onClick={event => {
+          if (event.target !== event.currentTarget) return;
+          const bounds = event.currentTarget.getBoundingClientRect();
+          if (event.clientX < bounds.left || event.clientX >= bounds.right ||
+            event.clientY < bounds.top || event.clientY >= bounds.bottom) {
+            event.currentTarget.close();
+          }
+        }}>
+        <button className="gallery-preview-remove gallery-delete-close" type="button" aria-label="Dialog schließen"
+          onClick={() => deleteDialog.current?.close()}>×</button>
+        <h2 id="gallery-delete-title">Bild entfernen?</h2>
+        <p id="gallery-delete-description">Das Bild wird aus der Galerie entfernt.</p>
+        {photoToDelete && <img src={`/images/${photoToDelete.file}`} alt={photoToDelete.alt} />}
+        <div className="gallery-editor-actions">
+          <button type="button" autoFocus onClick={() => deleteDialog.current?.close()}>Abbrechen</button>
+          <button className="gallery-delete-confirm" type="button" onClick={() => {
+            if (!photoToDelete) return;
+            const { file } = photoToDelete;
+            deleteDialog.current?.close();
+            void save(() => ({ action: 'remove', file }), 'Bild aus der Galerie entfernt.');
+          }}>Bild entfernen</button>
+        </div>
+      </dialog>
     </main>
   );
 }
